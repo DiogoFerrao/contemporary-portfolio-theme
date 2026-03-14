@@ -26,7 +26,10 @@
 
   </div>
 
+  {{- $layout := site.Params.galleryLayout | default "tiling" -}}
+  {{- if eq $layout "tiling" }}
   {{ $js := resources.Get "js/masonry.js" | minify | fingerprint }}
   <script src="{{ $js.RelPermalink }}"></script>
+  {{- end }}
 </body>
 </html>

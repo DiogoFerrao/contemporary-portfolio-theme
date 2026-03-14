@@ -14,9 +14,21 @@ title = "Artist Portfolio"
   fontFamily = '"Syne", "Helvetica Neue", Helvetica, Arial, sans-serif'
   fontURL = "https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&display=swap"
 
-  # Grid configuration
-  # gridGap: spacing in pixels between tiles on the homepage masonry grid.
-  gridGap = 24
+  # Gallery layout
+  # galleryLayout: choose how works are displayed on the homepage.
+  #   "tiling"     – masonry / tiled grid (default)
+  #   "horizontal" – full-width stacked images, ideal for landscape photography
+  galleryLayout = "horizontal"
+
+  # Spacing
+  # spacing: gap in pixels between tiles (tiling) or between rows (horizontal).
+  spacing = 24
+
+  # Maximum image height in pixels (only applies to the "horizontal" layout).
+  # Images taller than this value are constrained and horizontally centred,
+  # leaving empty space on the sides so they don't dominate the page.
+  # Set to 0 or remove to disable the cap.
+  maxImageHeight = 1200
 
   [params.contacts]
     email = "hello@example.com"

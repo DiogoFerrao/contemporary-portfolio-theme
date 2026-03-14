@@ -205,6 +205,75 @@ ol {
     text-transform: uppercase;
 }
 
+/* ===========================
+   HORIZONTAL GALLERY (HOME / WORKS)
+   =========================== */
+
+.horizontal-gallery {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing, 24px);
+    width: 100%;
+}
+
+.horizontal-item {
+    width: 100%;
+    overflow: hidden;
+}
+
+.horizontal-item a {
+    display: block;
+    position: relative;
+    cursor: pointer;
+}
+
+.horizontal-item img {
+    width: 100%;
+    display: block;
+    transition:
+        transform 0.4s ease,
+        filter 0.4s ease;
+}
+
+/*
+ * Height cap: when the --capped modifier is present, images taller than
+ * the configured max are constrained in height and centred horizontally,
+ * leaving empty space on the sides so they don't dominate the page.
+ */
+.horizontal-gallery--capped .horizontal-item img {
+    max-height: var(--max-image-height);
+    object-fit: contain;
+}
+
+.horizontal-item a:hover img {
+    transform: scale(1.02);
+    filter: brightness(0.95);
+}
+
+.horizontal-item .overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1.5rem 2rem;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.45));
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    pointer-events: none;
+}
+
+.horizontal-item a:hover .overlay {
+    opacity: 1;
+}
+
+.horizontal-item .overlay-title {
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
 /* Responsive */
 @media (max-width: 600px) {
     .site-header {

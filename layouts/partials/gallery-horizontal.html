@@ -1,0 +1,21 @@
+{{- $gap := site.Params.spacing | default 24 -}}
+{{- $maxH := site.Params.maxImageHeight | default 0 -}}
+<div class="horizontal-gallery{{ if $maxH }} horizontal-gallery--capped{{ end }}" style="--spacing: {{ $gap }}px;{{ if $maxH }} --max-image-height: {{ $maxH }}px;{{ end }}">
+  {{- $works := where site.RegularPages "Section" "works" -}}
+  {{- if $works -}}
+    {{- range $works }}
+    <div class="horizontal-item">
+      <a href="{{ .RelPermalink }}">
+        <img src="{{ .Params.image | relURL }}" {{ with .Title }}alt="{{ . }}"{{ else }}alt=""{{ end }} loading="lazy" />
+        {{- with .Title }}
+        <div class="overlay">
+          <span class="overlay-title">{{ . }}</span>
+        </div>
+        {{- end }}
+      </a>
+    </div>
+    {{- end }}
+  {{- else }}
+    <p style="color: #999; font-size: 0.9rem;">No works yet. Add your works as Markdown files in <code>content/works/</code> to get started.</p>
+  {{- end }}
+</div>

@@ -1,21 +1,8 @@
 {{ define "main" }}
-<div class="masonry-grid" data-gap="{{ site.Params.gridGap | default 24 }}">
-  {{- $works := where site.RegularPages "Section" "works" -}}
-  {{- if $works -}}
-    {{- range $works }}
-    <div class="masonry-item">
-      <a href="{{ .RelPermalink }}">
-        <img src="{{ .Params.image | relURL }}" {{ with .Title }}alt="{{ . }}"{{ else }}alt=""{{ end }} loading="lazy" />
-        {{- with .Title }}
-        <div class="overlay">
-          <span class="overlay-title">{{ . }}</span>
-        </div>
-        {{- end }}
-      </a>
-    </div>
-    {{- end }}
-  {{- else }}
-    <p style="color: #999; font-size: 0.9rem;">No works yet. Add your works as Markdown files in <code>content/works/</code> to get started.</p>
-  {{- end }}
-</div>
+{{- $layout := site.Params.galleryLayout | default "tiling" -}}
+{{- if eq $layout "horizontal" -}}
+  {{- partial "gallery-horizontal.html" . -}}
+{{- else -}}
+  {{- partial "gallery-tiling.html" . -}}
+{{- end -}}
 {{ end }}

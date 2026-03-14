@@ -1,6 +1,6 @@
 # Contemporary Portfolio — A Minimal Portfolio Theme for Hugo
 
-Contemporary Portfolio is a clean, white, minimalistic Hugo theme built for artists who want to showcase their work without distractions. Artists only need to edit a couple of simple files — the site handles layout, tiling, and responsiveness automatically.
+Contemporary Portfolio is a clean, white, minimalistic Hugo theme built for artists who want to showcase their work without distractions. Artists only need to edit a couple of simple files — the site handles layout, tiling, and responsiveness automatically. Choose between a masonry tiling grid or a full-width horizontal layout depending on your artistic style.
 
 ---
 
@@ -12,6 +12,7 @@ Contemporary Portfolio is a clean, white, minimalistic Hugo theme built for arti
 - [Project Structure](#project-structure)
 - [Configuration](#configuration)
   - [Site Settings](#site-settings)
+  - [Gallery Layout](#gallery-layout)
   - [Navigation Menu](#navigation-menu)
   - [Contact Information](#contact-information)
   - [Font Configuration](#font-configuration)
@@ -37,14 +38,15 @@ Contemporary Portfolio is a clean, white, minimalistic Hugo theme built for arti
 ## Features
 
 - **Minimalistic white design** — your art is the focus, not the website chrome.
-- **Full-width masonry tiling** — the homepage grid stretches edge to edge with no side margins, giving maximum visual impact to your work.
-- **Automatic masonry layout** — images are arranged dynamically based on their natural dimensions into up to 3 columns. No manual sizing needed.
+- **Two gallery layouts** — choose between a masonry **tiling** grid or a full-width **horizontal** stack directly from `hugo.toml`.
+- **Tiling layout** — images are arranged dynamically based on their natural dimensions into up to 3 columns. No manual sizing needed. The grid stretches edge to edge with generous spacing.
+- **Horizontal layout** — each image spans the full width of the screen and images are stacked vertically, ideal for landscape photography and cinematic work. Includes a configurable height cap so tall images don't dominate the page.
 - **Dedicated work pages** — each tile on the homepage links to its own page where you can write about the piece in Markdown, include process images, exhibition history, and anything else.
-- **Responsive** — adapts from 3 columns on desktop down to 1 column on mobile.
+- **Responsive** — tiling adapts from 3 columns on desktop down to 1 column on mobile; horizontal works beautifully at every width.
 - **Simple content-driven workflow** — each work is a Markdown file in `content/works/`. Add a file, drop in an image, and the homepage updates automatically.
 - **Contacts page** — define your email, social links, location, and bio in the config file.
 - **Configurable fonts** — set any font (including Google Fonts) directly from `hugo.toml` without touching CSS.
-- **Zero JavaScript frameworks** — lightweight vanilla JS for the masonry layout only.
+- **Zero JavaScript frameworks** — lightweight vanilla JS for the masonry layout only (horizontal layout uses pure CSS).
 - **Hugo Pipes** — CSS and JS are minified and fingerprinted automatically.
 
 ---
@@ -95,7 +97,7 @@ contemporary-portfolio-theme/
 │   ├── css/
 │   │   └── main.css              # All styles (edit to customize)
 │   └── js/
-│       └── masonry.js            # Automatic masonry layout engine
+│       └── masonry.js            # Automatic masonry layout engine (tiling only)
 ├── content/
 │   ├── _index.md                 # Homepage content file
 │   ├── contacts.md               # Contacts page (front matter only)
@@ -108,15 +110,17 @@ contemporary-portfolio-theme/
 │   ├── _default/
 │   │   ├── baseof.html           # Base HTML shell
 │   │   ├── contacts.html         # Contacts page template
-│   │   ├── index.html            # Home page (masonry grid)
+│   │   ├── index.html            # Home page (delegates to gallery partial)
 │   │   ├── single.html           # Default single page template
 │   │   └── taxonomy.html         # Empty taxonomy template
 │   ├── works/
-│   │   ├── list.html             # Works section list (masonry grid)
+│   │   ├── list.html             # Works section list (delegates to gallery partial)
 │   │   └── single.html           # Single work page template
 │   └── partials/
 │       ├── header.html           # Site header & navigation
-│       └── footer.html           # Site footer
+│       ├── footer.html           # Site footer
+│       ├── gallery-tiling.html   # Masonry grid gallery partial
+│       └── gallery-horizontal.html # Full-width stacked gallery partial
 ├── static/
 │   └── images/
 │       └── works/                # ★ YOUR IMAGES — drop files here
@@ -152,6 +156,38 @@ title = "Artist Portfolio"
 | `params.artistName`   | Displayed in the header and footer                       |
 | `params.tagline`      | A short subtitle (available for custom templates)        |
 | `params.description`  | Default meta description for SEO                         |
+
+### Gallery Layout
+
+The theme ships with two gallery layouts. Set the one you want in `hugo.toml`:
+
+```toml
+[params]
+  galleryLayout = "tiling"
+```
+
+| Value          | Description                                                                                                                                     |
+| -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| `"tiling"`     | **(default)** Masonry grid — images are dynamically arranged into up to 3 columns based on their natural dimensions.                            |
+| `"horizontal"` | Full-width stacked — each image stretches the full width of the screen, stacked vertically. Ideal for landscape photography and cinematic work.  |
+
+Both layouts share the `spacing` setting, which controls the gap (in pixels) between items:
+
+```toml
+[params]
+  spacing = 24
+```
+
+#### Horizontal layout options
+
+When using the `"horizontal"` layout you can also set a maximum image height. Images taller than this cap are constrained and horizontally centred, leaving empty space on the sides so that a single tall image doesn't dominate the page compared to landscape shots:
+
+```toml
+[params]
+  maxImageHeight = 600
+```
+
+Set `maxImageHeight` to `0` (or remove it entirely) to disable the cap and let every image stretch to full width regardless of its aspect ratio.
 
 ### Navigation Menu
 
@@ -300,8 +336,8 @@ static/
 
 **Image tips:**
 
-- **Any aspect ratio works.** The masonry grid automatically adapts — tall, wide, square, panoramic images all tile correctly.
-- **Recommended width:** 800–1200px for tile thumbnails. This balances quality with load speed.
+- **Any aspect ratio works.** The masonry grid (tiling) automatically adapts — tall, wide, square, panoramic images all tile correctly. The horizontal layout works best with landscape-oriented images, but portrait images are handled gracefully (especially with `maxImageHeight` set).
+- **Recommended width:** 800–1200px for tiling thumbnails; for the horizontal layout consider larger images (1600–2400px) since they span the full viewport.
 - **Supported formats:** JPG, PNG, WebP, AVIF — anything the browser can render.
 - **File size:** Aim for under 500KB per image. Use a tool like [Squoosh](https://squoosh.app/) to compress.
 - **Process/detail images** referenced in the Markdown body can be any size. They will be displayed at full width within the constrained content column.
@@ -312,9 +348,9 @@ static/
 
 ### Home Page (Works Grid)
 
-The home page (`/`) automatically reads all Markdown files from `content/works/` and renders a full-width masonry grid. Each tile links to that work's dedicated page.
+The home page (`/`) automatically reads all Markdown files from `content/works/` and renders them using the gallery layout configured in `hugo.toml` (see [Gallery Layout](#gallery-layout)). Each image links to that work's dedicated page.
 
-**How the masonry works:**
+#### Tiling layout
 
 1. Images are placed into columns (up to 3 on desktop, 2 on tablets, 1 on phones).
 2. Each new image is placed in the shortest column, creating a balanced layout regardless of image dimensions.
@@ -322,7 +358,14 @@ The home page (`/`) automatically reads all Markdown files from `content/works/`
 4. On hover, tiles slightly zoom and (if a title is set) show an overlay with the work's title.
 5. Clicking a tile navigates to the full work page.
 
-**Ordering:** tiles are ordered by the `weight` front matter field (lowest first). If no weight is set, Hugo uses its default ordering (by date, then alphabetical).
+#### Horizontal layout
+
+1. Each image spans the full width of the viewport and images are stacked vertically with a configurable gap between them.
+2. When `maxImageHeight` is set, images whose natural height would exceed the cap are constrained and horizontally centred (using `object-fit: contain`), leaving empty space on the sides rather than cropping.
+3. On hover, images slightly zoom and (if a title is set) show a gradient overlay with the work's title — the same effect as the tiling layout.
+4. Clicking an image navigates to the full work page.
+
+**Ordering (both layouts):** items are ordered by the `weight` front matter field (lowest first). If no weight is set, Hugo uses its default ordering (by date, then alphabetical).
 
 ### Single Work Page
 
@@ -360,16 +403,25 @@ See [Font Configuration](#font-configuration) above for full details and example
 
 ### Adjusting the Grid
 
-**Tile spacing** is controlled from `hugo.toml`:
+**Spacing between items** is controlled from `hugo.toml` and applies to both gallery layouts:
 
 ```toml
 [params]
-  gridGap = 24
+  spacing = 24
 ```
 
-This sets the gap in pixels between tiles on the homepage masonry grid. Higher values give a more spacious, gallery-wall feel; lower values make the grid denser. The default is `24`.
+This sets the gap in pixels between tiles (tiling) or between rows (horizontal). Higher values give a more spacious, gallery-wall feel; lower values make the layout denser. The default is `24`.
 
-**Column counts** are controlled in `assets/js/masonry.js` via the `getColumnCount` function:
+**Maximum image height** (horizontal layout only):
+
+```toml
+[params]
+  maxImageHeight = 600
+```
+
+Images taller than this pixel value are constrained and horizontally centred via `object-fit: contain`, leaving empty space on the sides. Set to `0` or remove to disable the cap. See [Gallery Layout](#gallery-layout) for details.
+
+**Column counts** (tiling layout only) are controlled in `assets/js/masonry.js` via the `getColumnCount` function:
 
 ```js
 function getColumnCount(containerWidth) {
