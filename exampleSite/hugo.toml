@@ -1,6 +1,7 @@
 baseURL = "https://example.com/"
 languageCode = "en-us"
 title = "Artist Portfolio"
+theme = "contemporary-portfolio"
 
 [params]
   artistName = "Your Name"

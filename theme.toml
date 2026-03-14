@@ -1,0 +1,12 @@
+name = "Contemporary Portfolio"
+license = "MIT"
+licenselink = "https://github.com/DiogoFerrao/contemporary-portfolio-theme/blob/main/LICENSE"
+description = "A minimal, clean portfolio theme for artists and photographers. Features tiling masonry and horizontal gallery layouts."
+homepage = "https://github.com/DiogoFerrao/contemporary-portfolio-theme"
+tags = ["portfolio", "gallery", "photography", "art", "minimal", "responsive"]
+features = ["masonry grid", "horizontal gallery", "configurable fonts", "contact page"]
+min_version = "0.112.0"
+
+[author]
+  name = "Diogo Ferrão"
+  homepage = "https://github.com/DiogoFerrao"

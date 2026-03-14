@@ -1,0 +1,13 @@
+{{ define "main-class" }}site-main--constrained{{ end }}
+
+{{ define "main" }}
+<article class="page-single">
+  <h1>{{ .Title }}</h1>
+
+  {{ if .Content }}
+  <div class="page-content">
+    {{ .Content }}
+  </div>
+  {{ end }}
+</article>
+{{ end }}
