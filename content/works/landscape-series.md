@@ -4,7 +4,7 @@ image: "/images/works/landscape-series.jpg"
 cover: "/images/works/landscape-series.jpg"
 year: "2024"
 medium: "Oil on linen"
-weight: 10
+weight: 7
 ---
 
 A panoramic study of the Alentejo plains at midday, when the heat flattens everything into bands of color. The extreme horizontal format mirrors the experience of standing in that landscape — the horizon line stretching beyond peripheral vision.

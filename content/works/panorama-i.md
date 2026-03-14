@@ -4,7 +4,7 @@ image: "/images/works/panorama-i.jpg"
 cover: "/images/works/panorama-i.jpg"
 year: "2024"
 medium: "Oil on linen"
-weight: 8
+weight: 3
 ---
 
 A wide-format painting that demands to be read left to right, like a sentence. The panoramic composition stretches the viewer's gaze across a continuous field of muted color, resisting the urge to settle on a single focal point.

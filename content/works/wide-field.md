@@ -4,7 +4,7 @@ image: "/images/works/wide-field.jpg"
 cover: "/images/works/wide-field.jpg"
 year: "2024"
 medium: "Oil on linen"
-weight: 9
+weight: 6
 ---
 
 A horizontal composition exploring the relationship between vast open space and the edges that contain it. The wide format was chosen deliberately to echo the experience of peripheral vision.

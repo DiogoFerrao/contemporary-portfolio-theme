@@ -14,6 +14,10 @@ title = "Artist Portfolio"
   fontFamily = '"Syne", "Helvetica Neue", Helvetica, Arial, sans-serif'
   fontURL = "https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&display=swap"
 
+  # Grid configuration
+  # gridGap: spacing in pixels between tiles on the homepage masonry grid.
+  gridGap = 24
+
   [params.contacts]
     email = "hello@example.com"
     instagram = "https://instagram.com/yourhandle"

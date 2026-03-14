@@ -246,7 +246,7 @@ sessions. Each layer of oil was allowed to dry fully before the next was applied
 
 ## Dimensions
 
-90 × 60 cm
+180 × 75 cm
 
 ![Detail of brushwork](/images/works/sunset-01-detail.jpg)
 
@@ -318,7 +318,7 @@ The home page (`/`) automatically reads all Markdown files from `content/works/`
 
 1. Images are placed into columns (up to 3 on desktop, 2 on tablets, 1 on phones).
 2. Each new image is placed in the shortest column, creating a balanced layout regardless of image dimensions.
-3. The grid stretches edge to edge with no side margins for maximum visual impact.
+3. The grid stretches edge to edge with generous spacing between tiles, giving the layout a gallery-wall feel.
 4. On hover, tiles slightly zoom and (if a title is set) show an overlay with the work's title.
 5. Clicking a tile navigates to the full work page.
 
@@ -360,7 +360,16 @@ See [Font Configuration](#font-configuration) above for full details and example
 
 ### Adjusting the Grid
 
-The JavaScript masonry in `assets/js/masonry.js` controls column counts via the `getColumnCount` function:
+**Tile spacing** is controlled from `hugo.toml`:
+
+```toml
+[params]
+  gridGap = 24
+```
+
+This sets the gap in pixels between tiles on the homepage masonry grid. Higher values give a more spacious, gallery-wall feel; lower values make the grid denser. The default is `24`.
+
+**Column counts** are controlled in `assets/js/masonry.js` via the `getColumnCount` function:
 
 ```js
 function getColumnCount(containerWidth) {
@@ -370,7 +379,7 @@ function getColumnCount(containerWidth) {
 }
 ```
 
-Adjust these pixel breakpoints or column counts to taste. You can also change the `GAP` constant at the top of the file (default: `10` pixels).
+Adjust these pixel breakpoints or column counts to taste.
 
 ### Colors
 
