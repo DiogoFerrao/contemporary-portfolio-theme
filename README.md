@@ -1,6 +1,6 @@
-# Beatriz — A Minimal Portfolio Theme for Hugo
+# Contemporary Portfolio — A Minimal Portfolio Theme for Hugo
 
-Beatriz is a clean, white, minimalistic Hugo theme built for artists who want to showcase their work without distractions. Artists only need to edit a couple of simple files — the site handles layout, tiling, and responsiveness automatically.
+Contemporary Portfolio is a clean, white, minimalistic Hugo theme built for artists who want to showcase their work without distractions. Artists only need to edit a couple of simple files — the site handles layout, tiling, and responsiveness automatically.
 
 ---
 
@@ -14,6 +14,7 @@ Beatriz is a clean, white, minimalistic Hugo theme built for artists who want to
   - [Site Settings](#site-settings)
   - [Navigation Menu](#navigation-menu)
   - [Contact Information](#contact-information)
+  - [Font Configuration](#font-configuration)
 - [Adding Your Works](#adding-your-works)
   - [Creating a Work Page](#creating-a-work-page)
   - [Front Matter Reference](#front-matter-reference)
@@ -42,6 +43,7 @@ Beatriz is a clean, white, minimalistic Hugo theme built for artists who want to
 - **Responsive** — adapts from 3 columns on desktop down to 1 column on mobile.
 - **Simple content-driven workflow** — each work is a Markdown file in `content/works/`. Add a file, drop in an image, and the homepage updates automatically.
 - **Contacts page** — define your email, social links, location, and bio in the config file.
+- **Configurable fonts** — set any font (including Google Fonts) directly from `hugo.toml` without touching CSS.
 - **Zero JavaScript frameworks** — lightweight vanilla JS for the masonry layout only.
 - **Hugo Pipes** — CSS and JS are minified and fingerprinted automatically.
 
@@ -65,8 +67,8 @@ hugo version
 1. **Clone or download this repository:**
 
    ```sh
-   git clone https://github.com/your-username/beatriz-hugo-template.git
-   cd beatriz-hugo-template
+   git clone https://github.com/DiogoFerrao/contemporary-portfolio-theme.git
+   cd contemporary-portfolio-theme
    ```
 
 2. **Add your images** to `static/images/works/`.
@@ -88,7 +90,7 @@ hugo version
 ## Project Structure
 
 ```
-beatriz-hugo-template/
+contemporary-portfolio-theme/
 ├── assets/
 │   ├── css/
 │   │   └── main.css              # All styles (edit to customize)
@@ -186,6 +188,35 @@ You can add more pages by creating new content files and adding menu entries. Th
 - **Leave a field empty (`""`)** to hide it from the contacts page. Only fields with values are displayed.
 - All URL fields (instagram, behance, twitter, linkedin, website) should be full URLs including `https://`.
 
+### Font Configuration
+
+The theme ships with **Syne** (a font designed for the contemporary art world) as the default, loaded from Google Fonts. You can change the font entirely from `hugo.toml` — no CSS or HTML editing needed:
+
+```toml
+[params]
+  fontFamily = '"Syne", "Helvetica Neue", Helvetica, Arial, sans-serif'
+  fontURL = "https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&display=swap"
+```
+
+| Key              | Description                                                                                 |
+| ---------------- | ------------------------------------------------------------------------------------------- |
+| `fontFamily`     | CSS `font-family` value. Wrap font names with spaces in inner quotes.                       |
+| `fontURL`        | URL to an external font stylesheet (e.g. Google Fonts). Leave empty (`""`) to skip loading. |
+
+**Example — using a system font only:**
+
+```toml
+fontFamily = '"Georgia", "Times New Roman", serif'
+fontURL = ""
+```
+
+**Example — using a different Google Font:**
+
+```toml
+fontFamily = '"Inter", sans-serif'
+fontURL = "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap"
+```
+
 ---
 
 ## Adding Your Works
@@ -230,14 +261,14 @@ That's it. The homepage tile and the dedicated work page are both generated from
 
 The front matter block (between the `---` lines) controls how the work appears:
 
-| Field    | Required | Description                                                                    |
-| -------- | -------- | ------------------------------------------------------------------------------ |
-| `title`  | Yes      | Name of the work. Shown on the homepage tile overlay and as the page heading.  |
-| `image`  | Yes      | Path to the tile image, relative to `static/`. This is the homepage thumbnail. |
+| Field    | Required | Description                                                                                                                          |
+| -------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| `title`  | Yes      | Name of the work. Shown on the homepage tile overlay and as the page heading.                                                        |
+| `image`  | Yes      | Path to the tile image, relative to `static/`. This is the homepage thumbnail.                                                       |
 | `cover`  | No       | Path to a cover image shown at the top of the work page. Often the same as `image`, but can be a different crop or higher resolution. |
-| `year`   | No       | Year the work was created. Shown as metadata on the work page.                 |
-| `medium` | No       | Medium or technique. Shown as metadata on the work page.                       |
-| `weight` | No       | Controls the order of tiles on the homepage. Lower numbers appear first.       |
+| `year`   | No       | Year the work was created. Shown as metadata on the work page.                                                                       |
+| `medium` | No       | Medium or technique. Shown as metadata on the work page.                                                                             |
+| `weight` | No       | Controls the order of tiles on the homepage. Lower numbers appear first.                                                             |
 
 ### Writing the Page Content
 
@@ -315,23 +346,17 @@ The contacts page (`/contacts/`) is driven entirely by `hugo.toml` — no conten
 
 ### Changing Fonts
 
-The theme uses the system font stack (`Helvetica Neue`, `Helvetica`, `Arial`, `sans-serif`) by default. To use a custom font:
+The theme defaults to **Syne**, loaded via Google Fonts. To change it, just update two values in `hugo.toml`:
 
-1. Add a `<link>` tag in `layouts/_default/baseof.html` inside the `<head>`.
-2. Update the `font-family` in `assets/css/main.css` on the `body` selector.
-
-Example with Inter:
-
-```html
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&display=swap" rel="stylesheet">
+```toml
+[params]
+  fontFamily = '"Your Font Name", fallback-family, sans-serif'
+  fontURL = "https://fonts.googleapis.com/css2?family=Your+Font+Name:wght@400;500;600&display=swap"
 ```
 
-```css
-body {
-  font-family: "Inter", sans-serif;
-}
-```
+Set `fontURL = ""` if you're using a system/web-safe font that doesn't need an external stylesheet.
+
+See [Font Configuration](#font-configuration) above for full details and examples.
 
 ### Adjusting the Grid
 
@@ -351,7 +376,16 @@ Adjust these pixel breakpoints or column counts to taste. You can also change th
 
 The theme is intentionally white and minimal. Key color values in `assets/css/main.css`:
 
-| Element               | Property0,0,0.45)`      | Semi-transparent dark         |
+| Element           | CSS Property       | Default Value                    | Notes                              |
+| ----------------- | ------------------ | -------------------------------- | ---------------------------------- |
+| Background        | `background-color` | `#fff`                           | Pure white                         |
+| Body text         | `color`            | `#222`                           | Near-black                         |
+| Secondary text    | `color`            | `#444`                           | Contact details, descriptions      |
+| Muted text        | `color`            | `#999`                           | Labels, metadata                   |
+| Footer text       | `color`            | `#bbb`                           | Very light                         |
+| Hover overlay     | `background`       | `rgba(0, 0, 0, 0.45)`           | Semi-transparent dark              |
+| Nav underline     | `background-color` | `#222`                           | Appears on hover / active          |
+| Content links     | `border-bottom`    | `1px solid #ccc`                 | Subtle underline, darkens on hover |
 
 ---
 
