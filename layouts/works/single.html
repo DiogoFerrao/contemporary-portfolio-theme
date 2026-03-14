@@ -1,0 +1,29 @@
+{{ define "main-class" }}site-main--constrained{{ end }}
+
+{{ define "main" }}
+<a href="{{ "/" | relURL }}" class="work-back">&larr; Back to works</a>
+
+<article class="work-single">
+  <header class="work-single-header">
+    <h1>{{ .Title }}</h1>
+    {{ if or .Params.year .Params.medium }}
+    <div class="work-meta">
+      {{ with .Params.year }}<span>{{ . }}</span>{{ end }}
+      {{ with .Params.medium }}<span>{{ . }}</span>{{ end }}
+    </div>
+    {{ end }}
+  </header>
+
+  {{ with .Params.cover }}
+  <div class="work-cover">
+    <img src="{{ . | relURL }}" alt="{{ $.Title }}" />
+  </div>
+  {{ end }}
+
+  {{ if .Content }}
+  <div class="work-content">
+    {{ .Content }}
+  </div>
+  {{ end }}
+</article>
+{{ end }}

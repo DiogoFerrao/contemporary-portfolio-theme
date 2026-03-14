@@ -1,0 +1,35 @@
+baseURL = "https://example.com/"
+languageCode = "en-us"
+title = "Artist Portfolio"
+
+[params]
+  artistName = "Your Name"
+  tagline = "Visual Artist & Designer"
+  description = "Portfolio of works by Your Name"
+
+  # Font configuration
+  # fontFamily: CSS font-family value used across the site.
+  # fontURL:    (optional) URL to an external font stylesheet, e.g. Google Fonts.
+  #             Leave empty or remove if using system / web-safe fonts only.
+  fontFamily = '"Syne", "Helvetica Neue", Helvetica, Arial, sans-serif'
+  fontURL = "https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&display=swap"
+
+  [params.contacts]
+    email = "hello@example.com"
+    instagram = "https://instagram.com/yourhandle"
+    behance = ""
+    twitter = ""
+    linkedin = ""
+    website = ""
+    location = "Lisbon, Portugal"
+    bio = "A short biography about yourself and your artistic practice. Edit this in hugo.toml under [params.contacts]."
+
+[[menus.main]]
+  name = "Works"
+  url = "/"
+  weight = 1
+
+[[menus.main]]
+  name = "Contacts"
+  url = "/contacts/"
+  weight = 2

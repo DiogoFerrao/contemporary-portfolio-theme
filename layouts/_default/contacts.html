@@ -1,0 +1,62 @@
+{{ define "main-class" }}site-main--constrained{{ end }}
+
+{{ define "main" }}
+<section class="contact-page">
+  <h1>Contacts</h1>
+
+  {{ with site.Params.contacts.bio }}
+  <p>{{ . }}</p>
+  {{ end }}
+
+  <div class="contact-links">
+    {{ with site.Params.contacts.email }}
+    <div class="contact-link">
+      <span class="contact-link-label">Email</span>
+      <a href="mailto:{{ . }}">{{ . }}</a>
+    </div>
+    {{ end }}
+
+    {{ with site.Params.contacts.instagram }}
+    <div class="contact-link">
+      <span class="contact-link-label">Instagram</span>
+      <a href="{{ . }}" target="_blank" rel="noopener noreferrer">{{ . }}</a>
+    </div>
+    {{ end }}
+
+    {{ with site.Params.contacts.behance }}
+    <div class="contact-link">
+      <span class="contact-link-label">Behance</span>
+      <a href="{{ . }}" target="_blank" rel="noopener noreferrer">{{ . }}</a>
+    </div>
+    {{ end }}
+
+    {{ with site.Params.contacts.twitter }}
+    <div class="contact-link">
+      <span class="contact-link-label">Twitter</span>
+      <a href="{{ . }}" target="_blank" rel="noopener noreferrer">{{ . }}</a>
+    </div>
+    {{ end }}
+
+    {{ with site.Params.contacts.linkedin }}
+    <div class="contact-link">
+      <span class="contact-link-label">LinkedIn</span>
+      <a href="{{ . }}" target="_blank" rel="noopener noreferrer">{{ . }}</a>
+    </div>
+    {{ end }}
+
+    {{ with site.Params.contacts.website }}
+    <div class="contact-link">
+      <span class="contact-link-label">Website</span>
+      <a href="{{ . }}" target="_blank" rel="noopener noreferrer">{{ . }}</a>
+    </div>
+    {{ end }}
+
+    {{ with site.Params.contacts.location }}
+    <div class="contact-link">
+      <span class="contact-link-label">Location</span>
+      <span>{{ . }}</span>
+    </div>
+    {{ end }}
+  </div>
+</section>
+{{ end }}

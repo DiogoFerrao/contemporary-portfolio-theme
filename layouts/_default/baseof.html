@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode | default "en" }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ if not .IsHome }}{{ .Title }} — {{ end }}{{ .Site.Title }}</title>
+  <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+  {{ with site.Params.fontURL }}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="{{ . }}">
+  {{ end }}
+  {{ $css := resources.Get "css/main.css" | minify | fingerprint }}
+  <link rel="stylesheet" href="{{ $css.RelPermalink }}">
+</head>
+<body {{ with site.Params.fontFamily }}style="{{ printf "--font-family: %s;" . | safeCSS }}"{{ end }}>
+  <div class="site-wrapper">
+
+    {{- partial "header.html" . -}}
+
+    <main class="site-main {{ block "main-class" . }}{{ end }}">
+      {{- block "main" . }}{{ end -}}
+    </main>
+
+    {{- partial "footer.html" . -}}
+
+  </div>
+
+  {{ $js := resources.Get "js/masonry.js" | minify | fingerprint }}
+  <script src="{{ $js.RelPermalink }}"></script>
+</body>
+</html>
