@@ -19,10 +19,12 @@ Contemporary Portfolio is a clean, white, minimalistic Hugo theme built for arti
 - [Adding Your Works](#adding-your-works)
   - [Creating a Work Page](#creating-a-work-page)
   - [Front Matter Reference](#front-matter-reference)
+  - [Featured Works on Home Page](#featured-works-on-home-page)
   - [Writing the Page Content](#writing-the-page-content)
   - [Adding Images](#adding-images)
 - [Pages](#pages)
-  - [Home Page (Works Grid)](#home-page-works-grid)
+  - [Home Page (Featured Works)](#home-page-featured-works)
+  - [Works Page (All Works)](#works-page-all-works)
   - [Single Work Page](#single-work-page)
   - [Contacts Page](#contacts-page)
 - [Customization](#customization)
@@ -195,17 +197,22 @@ The main navigation is defined at the bottom of `hugo.toml`:
 
 ```toml
 [[menus.main]]
-  name = "Works"
+  name = "Home"
   url = "/"
   weight = 1
 
 [[menus.main]]
+  name = "Works"
+  url = "/works/"
+  weight = 2
+
+[[menus.main]]
   name = "Contacts"
   url = "/contacts/"
-  weight = 2
+  weight = 3
 ```
 
-You can add more pages by creating new content files and adding menu entries. The `weight` field controls the display order (lower numbers appear first).
+The home page shows only [featured works](#featured-works-on-home-page), while the `/works/` page shows everything. You can add more pages by creating new content files and adding menu entries. The `weight` field controls the display order (lower numbers appear first).
 
 ### Contact Information
 
@@ -271,6 +278,8 @@ cover: "/images/works/sunset-01.jpg"
 year: "2024"
 medium: "Oil on canvas"
 weight: 1
+show_on_home: true
+home_weight: 3
 ---
 
 This piece captures the fleeting warmth of a late summer sunset over the Tagus.
@@ -291,20 +300,49 @@ sessions. Each layer of oil was allowed to dry fully before the next was applied
 - *Solo Show*, Galeria da Rua, Lisbon, 2024
 ```
 
-That's it. The homepage tile and the dedicated work page are both generated from this single file.
+That's it. The works page tile and the dedicated work page are both generated from this single file. If `show_on_home` is set to `true`, the work also appears on the home page.
 
 ### Front Matter Reference
 
 The front matter block (between the `---` lines) controls how the work appears:
 
-| Field    | Required | Description                                                                                                                          |
-| -------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| `title`  | Yes      | Name of the work. Shown on the homepage tile overlay and as the page heading.                                                        |
-| `image`  | Yes      | Path to the tile image, relative to `static/`. This is the homepage thumbnail.                                                       |
-| `cover`  | No       | Path to a cover image shown at the top of the work page. Often the same as `image`, but can be a different crop or higher resolution. |
-| `year`   | No       | Year the work was created. Shown as metadata on the work page.                                                                       |
-| `medium` | No       | Medium or technique. Shown as metadata on the work page.                                                                             |
-| `weight` | No       | Controls the order of tiles on the homepage. Lower numbers appear first.                                                             |
+| Field          | Required | Description                                                                                                                          |
+| -------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| `title`        | Yes      | Name of the work. Shown on the tile overlay and as the page heading.                                                                 |
+| `image`        | Yes      | Path to the tile image, relative to `static/`. This is the thumbnail shown in galleries.                                             |
+| `cover`        | No       | Path to a cover image shown at the top of the work page. Often the same as `image`, but can be a different crop or higher resolution. |
+| `year`         | No       | Year the work was created. Shown as metadata on the work page.                                                                       |
+| `medium`       | No       | Medium or technique. Shown as metadata on the work page.                                                                             |
+| `weight`       | No       | Controls the order of tiles on the `/works/` page. Lower numbers appear first.                                                       |
+| `show_on_home` | No       | Set to `true` to feature this work on the home page. If no works have this set, **all** works are shown on the home page (backward compatible). |
+| `home_weight`  | No       | Controls the order of tiles on the home page (independent of `weight`). Lower numbers appear first. Only relevant when `show_on_home` is `true`. |
+
+### Featured Works on Home Page
+
+By default, if no works have `show_on_home` set, the home page displays **all** works — this keeps the theme backward compatible with existing sites.
+
+To curate which works appear on the home page, add `show_on_home: true` to the front matter of the works you want to feature. You can also set `home_weight` to control their order independently from the `/works/` page:
+
+```markdown
+---
+title: "Sunset Series No. 1"
+image: "/images/works/sunset-01.jpg"
+year: "2024"
+weight: 5
+show_on_home: true
+home_weight: 1
+---
+```
+
+In this example the work appears **first** on the home page (`home_weight: 1`) but fifth on the `/works/` page (`weight: 5`).
+
+| Field          | Where it applies | Description                                |
+| -------------- | ---------------- | ------------------------------------------ |
+| `weight`       | `/works/` page   | Ordering on the works page (all works).    |
+| `home_weight`  | Home page (`/`)  | Ordering on the home page (featured only). |
+| `show_on_home` | Home page (`/`)  | Whether the work appears on the home page. |
+
+Works that don't have `show_on_home: true` will only appear on the `/works/` page.
 
 ### Writing the Page Content
 
@@ -346,9 +384,9 @@ static/
 
 ## Pages
 
-### Home Page (Works Grid)
+### Home Page (Featured Works)
 
-The home page (`/`) automatically reads all Markdown files from `content/works/` and renders them using the gallery layout configured in `hugo.toml` (see [Gallery Layout](#gallery-layout)). Each image links to that work's dedicated page.
+The home page (`/`) displays featured works — those with `show_on_home: true` in their front matter — ordered by `home_weight`. If no works have `show_on_home` set, all works are shown (backward compatible). The gallery layout is configured in `hugo.toml` (see [Gallery Layout](#gallery-layout)). Each image links to that work's dedicated page.
 
 #### Tiling layout
 
@@ -365,13 +403,17 @@ The home page (`/`) automatically reads all Markdown files from `content/works/`
 3. On hover, images slightly zoom and (if a title is set) show a gradient overlay with the work's title — the same effect as the tiling layout.
 4. Clicking an image navigates to the full work page.
 
-**Ordering (both layouts):** items are ordered by the `weight` front matter field (lowest first). If no weight is set, Hugo uses its default ordering (by date, then alphabetical).
+**Ordering (both layouts):** on the home page, items are ordered by `home_weight`; on the `/works/` page, items are ordered by `weight`. If no weight is set, Hugo uses its default ordering (by date, then alphabetical).
+
+### Works Page (All Works)
+
+The works page (`/works/`) displays **all** works from `content/works/`, ordered by `weight`. It uses the same gallery layout as the home page. This page always shows every work regardless of the `show_on_home` setting.
 
 ### Single Work Page
 
 Each work page (`/works/your-work-slug/`) shows:
 
-1. A **"← Back to works"** link to return to the homepage
+1. A **"← Back to works"** link to return to the `/works/` page
 2. The work **title** as a large heading
 3. **Metadata** (year and medium) if provided
 4. A **cover image** if the `cover` front matter field is set
@@ -467,9 +509,10 @@ This will:
 
 1. Create `content/works/my-new-piece.md`
 2. Add the front matter (`title`, `image`, and optionally `cover`, `year`, `medium`, `weight`)
-3. Write your Markdown content below the front matter
-4. Drop the image(s) into `static/images/works/`
-5. The homepage and work page appear automatically
+3. To feature it on the home page, add `show_on_home: true` and `home_weight` to the front matter
+4. Write your Markdown content below the front matter
+5. Drop the image(s) into `static/images/works/`
+6. The works page and work page appear automatically; the home page updates if `show_on_home` is set
 
 ### Adding New Page Types
 

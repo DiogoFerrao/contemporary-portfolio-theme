@@ -5,6 +5,8 @@ cover: "/images/works/vessel-study.jpg"
 year: "2023"
 medium: "Ceramic"
 weight: 2
+show_on_home: true
+home_weight: 4
 ---
 
 A hand-built ceramic form exploring the tension between functional object and sculptural presence. The vessel is deliberately too tall, too narrow — it resists use, insisting instead on being looked at.

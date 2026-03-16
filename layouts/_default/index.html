@@ -1,8 +1,27 @@
 {{ define "main" }}
 {{- $layout := site.Params.galleryLayout | default "tiling" -}}
-{{- if eq $layout "horizontal" -}}
-  {{- partial "gallery-horizontal.html" . -}}
+
+{{- /* Collect all works from the "works" section */ -}}
+{{- $allWorks := where site.RegularPages "Section" "works" -}}
+
+{{- /* Filter to only works marked for the home page */ -}}
+{{- $homeWorks := where $allWorks ".Params.show_on_home" true -}}
+
+{{- /* If any works are marked for home, sort by home_weight; otherwise fall back to all works */ -}}
+{{- if $homeWorks -}}
+  {{- $homeWorks = $homeWorks.ByParam "home_weight" -}}
+  {{- $ctx := dict "works" $homeWorks -}}
+  {{- if eq $layout "horizontal" -}}
+    {{- partial "gallery-horizontal.html" $ctx -}}
+  {{- else -}}
+    {{- partial "gallery-tiling.html" $ctx -}}
+  {{- end -}}
 {{- else -}}
-  {{- partial "gallery-tiling.html" . -}}
+  {{- $ctx := dict "works" $allWorks -}}
+  {{- if eq $layout "horizontal" -}}
+    {{- partial "gallery-horizontal.html" $ctx -}}
+  {{- else -}}
+    {{- partial "gallery-tiling.html" $ctx -}}
+  {{- end -}}
 {{- end -}}
 {{ end }}

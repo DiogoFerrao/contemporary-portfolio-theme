@@ -1,8 +1,12 @@
 {{ define "main" }}
 {{- $layout := site.Params.galleryLayout | default "tiling" -}}
+
+{{- $allWorks := where site.RegularPages "Section" "works" -}}
+{{- $ctx := dict "works" $allWorks -}}
+
 {{- if eq $layout "horizontal" -}}
-  {{- partial "gallery-horizontal.html" . -}}
+  {{- partial "gallery-horizontal.html" $ctx -}}
 {{- else -}}
-  {{- partial "gallery-tiling.html" . -}}
+  {{- partial "gallery-tiling.html" $ctx -}}
 {{- end -}}
 {{ end }}

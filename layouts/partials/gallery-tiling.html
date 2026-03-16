@@ -1,5 +1,5 @@
 <div class="masonry-grid" data-gap="{{ site.Params.spacing | default 24 }}">
-  {{- $works := where site.RegularPages "Section" "works" -}}
+  {{- $works := .works -}}
   {{- if $works -}}
     {{- range $works }}
     <div class="masonry-item">

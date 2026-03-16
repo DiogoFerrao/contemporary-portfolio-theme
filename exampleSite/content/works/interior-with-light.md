@@ -5,6 +5,8 @@ cover: "/images/works/interior-with-light.jpg"
 year: "2024"
 medium: "Oil on canvas"
 weight: 4
+show_on_home: true
+home_weight: 3
 ---
 
 A quiet study of how light enters a room and transforms the objects it touches. The near-square format was chosen to echo the shape of the window that inspired the piece.

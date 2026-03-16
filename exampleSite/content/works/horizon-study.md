@@ -5,6 +5,8 @@ cover: "/images/works/horizon-study.jpg"
 year: "2024"
 medium: "Oil on linen"
 weight: 1
+show_on_home: true
+home_weight: 2
 ---
 
 A wide-format painting exploring the dissolving boundary between sky and land. The horizontal emphasis forces the eye to travel slowly across the surface, encountering subtle shifts in temperature and saturation.
